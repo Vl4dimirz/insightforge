@@ -1,0 +1,11 @@
+.venv/
+__pycache__/
+*.pyc
+.env
+.streamlit/secrets.toml
+*.log
+# generated artifacts
+report.xlsx
+report.pdf
+*.png
+.pytest_cache/

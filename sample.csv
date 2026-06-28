@@ -1,0 +1,11 @@
+order_id,customer,country,product,quantity,price,status
+1001,Alice,US,Webtoon Pack,2,9.99,paid
+1002,Bra,TH,Coin Topup,1,4.99,paid
+1003,Chen,SG,Webtoon Pack,3,9.99,pending
+1004,Dara,TH,Coin Topup,5,4.99,paid
+1005,Emi,JP,Premium Tier,1,12.99,paid
+1006,Farid,ID,Webtoon Pack,,9.99,failed
+1007,Gina,US,Premium Tier,2,12.99,paid
+1008,Hiro,JP,Coin Topup,4,4.99,paid
+1009,Ivan,RU,Webtoon Pack,1,9.99,refunded
+1010,Jana,TH,Premium Tier,1,12.99,paid
