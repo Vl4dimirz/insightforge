@@ -3,6 +3,7 @@
 An AI-powered **data & automation platform**, built in Python.
 
 > Repo: https://github.com/Vl4dimirz/insightforge
+> Live API + docs: https://insightforge-api-na2a.onrender.com/docs
 
 Feed it data (uploads or scraped from the web), it cleans and analyzes it,
 turns the numbers into plain-language insights with AI, serves everything over a

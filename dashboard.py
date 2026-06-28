@@ -9,6 +9,7 @@ Run the API first (uvicorn app.main:app), then:  streamlit run dashboard.py
 """
 
 import io
+import os
 
 import pandas as pd
 import requests
@@ -34,7 +35,9 @@ st.markdown(
 # ── Sidebar: backend connection ────────────────────────────────────────────────
 with st.sidebar:
     st.subheader("Backend")
-    api = st.text_input("API base URL", value="http://127.0.0.1:8000").rstrip("/")
+    # Defaults to the deployed API; override with INSIGHTFORGE_API env var or the field.
+    default_api = os.environ.get("INSIGHTFORGE_API", "http://127.0.0.1:8000")
+    api = st.text_input("API base URL", value=default_api).rstrip("/")
     try:
         h = requests.get(f"{api}/health", timeout=4).json()
         ai_on = h.get("ai_configured")
