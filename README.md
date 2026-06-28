@@ -35,6 +35,12 @@ uvicorn app.main:app --reload
 
 Open **http://127.0.0.1:8000/docs** for interactive API docs.
 
+Run the dashboard (in a second terminal, with the API running):
+
+```bash
+streamlit run dashboard/streamlit_app.py
+```
+
 ## Tech
 
 Python · FastAPI · Pydantic · Uvicorn · Google Gemini · (pandas / scraping / reporting — incoming)

@@ -1,0 +1,5 @@
+# The dashboard only talks to the API over HTTP, so it needs almost nothing.
+# (The heavy backend deps live in the root requirements.txt, used by Render.)
+streamlit==1.40.2
+pandas>=2.2,<3
+requests>=2.31
