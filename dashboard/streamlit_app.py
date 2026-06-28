@@ -36,13 +36,9 @@ st.markdown(
 # ── Sidebar: backend connection ────────────────────────────────────────────────
 with st.sidebar:
     st.subheader("Backend")
-    # API URL resolves: Streamlit secret → env var → the deployed default.
+    # API URL: env var (Streamlit Cloud also exposes secrets as env vars) → deployed default.
     # Override anytime in the field (e.g. http://127.0.0.1:8000 for local dev).
-    try:
-        _secret_api = st.secrets["INSIGHTFORGE_API"]
-    except Exception:
-        _secret_api = None
-    default_api = _secret_api or os.environ.get("INSIGHTFORGE_API") or "https://insightforge-api-na2a.onrender.com"
+    default_api = os.environ.get("INSIGHTFORGE_API", "https://insightforge-api-na2a.onrender.com")
     api = st.text_input("API base URL", value=default_api).rstrip("/")
     try:
         h = requests.get(f"{api}/health", timeout=4).json()
