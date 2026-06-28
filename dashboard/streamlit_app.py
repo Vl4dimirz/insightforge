@@ -17,16 +17,17 @@ import streamlit as st
 
 st.set_page_config(page_title="InsightForge", page_icon="✶", layout="wide")
 
-# ── Monochrome styling ─────────────────────────────────────────────────────────
+# ── Brand touch (colors come from the dark theme in .streamlit/config.toml) ──────
 st.markdown(
     """
     <style>
-      .stApp { background:#000; color:#fff; }
-      h1,h2,h3,h4,p,label,span,li { color:#fff !important; }
-      .stButton button { background:#fff; color:#000; border:0; border-radius:0;
-        text-transform:uppercase; letter-spacing:.1em; font-weight:600; }
-      [data-testid="stMetricValue"], [data-testid="stMetricLabel"] { color:#fff !important; }
-      textarea, input, .stTextInput input { background:#0c0c0c !important; color:#fff !important; }
+      /* square, uppercase buttons — the monochrome look, without fighting the theme */
+      .stButton button, .stDownloadButton button {
+        border-radius: 0 !important;
+        text-transform: uppercase;
+        letter-spacing: .08em;
+        font-weight: 600;
+      }
     </style>
     """,
     unsafe_allow_html=True,

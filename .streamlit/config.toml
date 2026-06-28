@@ -1,0 +1,8 @@
+# Force a consistent dark, monochrome theme everywhere (incl. the sidebar &
+# widgets) so text is always legible — not dependent on the viewer's settings.
+[theme]
+base = "dark"
+backgroundColor = "#000000"
+secondaryBackgroundColor = "#101010"
+textColor = "#ffffff"
+primaryColor = "#ffffff"
