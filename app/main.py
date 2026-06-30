@@ -14,7 +14,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from app.config import settings
 from app import automation
-from app.routers import ai, data, scrape, insights, report, automation as automation_router
+from app.routers import ai, data, scrape, insights, report, automation as automation_router, agent
 
 
 @asynccontextmanager
@@ -46,6 +46,7 @@ app.include_router(scrape.router)
 app.include_router(insights.router)
 app.include_router(report.router)
 app.include_router(automation_router.router)
+app.include_router(agent.router)
 
 
 @app.get("/health", tags=["System"])

@@ -99,7 +99,7 @@ def show_profile(profile: dict):
 
 
 # ── Inputs ─────────────────────────────────────────────────────────────────────
-tab_file, tab_url = st.tabs(["📁 Upload file", "🌐 From URL"])
+tab_file, tab_url, tab_agent = st.tabs(["📁 Upload file", "🌐 From URL", "🤖 Research agent"])
 
 with tab_file:
     up = st.file_uploader("CSV or Excel", type=["csv", "xlsx", "xls"])
@@ -127,6 +127,53 @@ with tab_url:
         st.session_state["profile"] = r.json() if r.ok else None
         st.session_state["error"] = None if r.ok else r.text
         st.session_state.pop("insights", None)
+
+with tab_agent:
+    st.caption("Give it a goal and a few URLs — it plans what to compare, scrapes each page, "
+               "then writes one grounded report. The whole loop runs itself.")
+    ag_goal = st.text_area(
+        "Goal",
+        placeholder="Compare these competitors and summarize each one's strengths and weaknesses.",
+        key="ag_goal",
+    )
+    ag_urls = st.text_area("URLs (one per line, up to 5)", placeholder="https://…\nhttps://…", key="ag_urls")
+    if st.button("Run agent", key="ba"):
+        urls = [u.strip() for u in ag_urls.splitlines() if u.strip()]
+        if not ag_goal.strip() or not urls:
+            st.warning("Enter a goal and at least one URL.")
+        else:
+            with st.spinner("Planning → gathering → synthesizing…"):
+                r = requests.post(f"{api}/agent/research",
+                                  json={"goal": ag_goal, "urls": urls}, timeout=120)
+            st.session_state["agent_result"] = r.json() if r.ok else None
+            st.session_state["agent_error"] = None if r.ok else r.text
+
+    if st.session_state.get("agent_error"):
+        st.error(st.session_state["agent_error"])
+
+    res = st.session_state.get("agent_result")
+    if res:
+        st.divider()
+        st.caption("Focus dimensions the agent chose")
+        st.write(" · ".join(res["focus"]))
+
+        with st.expander("Agent steps", expanded=True):
+            for s in res["steps"]:
+                st.markdown(
+                    f"**{s['phase']}** — {s['summary']}  \n"
+                    f"<span style='color:#888;font-size:0.85em'>{s['detail']}</span>",
+                    unsafe_allow_html=True,
+                )
+
+        st.caption("Sources gathered")
+        for s in res["sources"]:
+            if s.get("error"):
+                st.markdown(f"- ⚠ {s['url']} — {s['error']}")
+            else:
+                st.markdown(f"- **{s.get('title') or s['url']}** — {s.get('text_chars', 0):,} chars read")
+
+        st.subheader("Report")
+        st.markdown(res["report"])
 
 # ── Results ────────────────────────────────────────────────────────────────────
 if st.session_state.get("error"):
